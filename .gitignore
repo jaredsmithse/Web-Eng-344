@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/WebPortal/WebPortal/WebPortal.csproj.user
+/WebPortal/WebPortal/bin/*
+/WebPortal/WebPortal/obj/*
+/WebPortal/WebPortalTests/bin/*
+/WebPortal/WebPortalTests/obj/*
+*.dll
+*.suo
