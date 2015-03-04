@@ -404,11 +404,23 @@ namespace WebPortal.Controllers
             var friendsList = new List<FacebookViewModel>();
             foreach (dynamic post in myInfo.data)
             {
-                friendsList.Add(new FacebookViewModel()
+                if (post.likes != null)
                 {
-                    Name = post.name,
-                    Message = post.message
-                });
+                    friendsList.Add(new FacebookViewModel()
+                    {
+                        Name = post.from.name,
+                        Message = post.message,
+                        Likes = post.likes.data.Count
+                    });
+                }//if
+                else {
+                    friendsList.Add(new FacebookViewModel()
+                    {
+                        Name = post.from.name,
+                        Message = post.message,
+                        Likes = 0
+                    });
+                }
             }
 
             return View(friendsList);
