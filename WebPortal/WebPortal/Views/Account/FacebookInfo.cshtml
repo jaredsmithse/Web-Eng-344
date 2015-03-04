@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "FacebookInfo";
+
+
+<h2>FacebookInfo</h2>
+@model IList<WebPortal.Models.FacebookViewModel>
+
+if (Model.Count > 0)
+{
+    <h3>List of Recent Posts</h3>
+<div class="row">
+        <table style="width:100%">
+            <tr>
+                <td>Poster's Name</td>
+                <td>Message</td>
+                <td>Number of Likes</td>
+            </tr>
+            @foreach (var post in Model)
+            {
+                <div class="col-md-3">
+                    <tr>
+                        <td>@post.Name</td>
+                        <td>@post.Message</td>
+                        <td>@post.Likes</td>
+                    </tr>
+
+                </div>
+            }
+        </table>
+    </div>
+}
+}
