@@ -402,12 +402,12 @@ namespace WebPortal.Controllers
             fb.AppSecret = "3072d557ae33bd64013e58ed3dc44006";
             dynamic myInfo = fb.Get("/me/feed");
             var friendsList = new List<FacebookViewModel>();
-            foreach (dynamic friend in myInfo.data)
+            foreach (dynamic post in myInfo.data)
             {
                 friendsList.Add(new FacebookViewModel()
                 {
-                    Name = friend.name,
-                    ImageURL = @"https://graph.facebook.com/" + friend.id + "/picture?type=large"
+                    Name = post.name,
+                    Message = post.message
                 });
             }
 

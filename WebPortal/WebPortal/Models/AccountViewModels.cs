@@ -116,8 +116,10 @@ namespace WebPortal.Models
         [Display(Name = "Friend's name")]
         public string Name { get; set; }
 
-        public string ImageURL { get; set; }
-    }
+        public string Message { get; set; }
+
+        public int Likes { get; set; }    
+        }
 
 
     public class ManageUserViewModel
