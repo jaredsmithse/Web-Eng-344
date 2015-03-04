@@ -2,6 +2,10 @@
     ViewBag.Title = "Home Page";
 }
 
+@section scripts{
+    @Scripts.Render("~/bundles/angular")
+}
+
 <div class="row">
     <div class="col-md-8">
         <h2>Facebook Feed and Stuff</h2>
@@ -20,7 +24,7 @@
                 @Html.ActionLink("Full Report", "Index", "Stock", new { @class = "btn btn-default btn-xs pull-right" })
                 <h3 class="panel-title">Top Five Stocks</h3>
             </div>
-            <p>Top five stocks will go here.</p>
+            @Html.Partial("_StocksPartial")
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
