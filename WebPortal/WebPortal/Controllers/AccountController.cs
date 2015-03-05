@@ -422,6 +422,40 @@ namespace WebPortal.Controllers
                     });
                 }
             }
+            return View(friendsList);
+        }
+
+        //GET: Account/FacebookInfo
+        [Authorize]
+        public async Task<ActionResult> FacebookFeed()
+        {
+            var claimsforUser = await UserManager.GetClaimsAsync(User.Identity.GetUserId());
+            var access_token = claimsforUser.FirstOrDefault(x => x.Type == "FacebookAccessToken").Value;
+            var fb = new FacebookClient(access_token);
+            fb.AppId = 1549521788629862 + "";
+            fb.AppSecret = "3072d557ae33bd64013e58ed3dc44006";
+            dynamic myInfo = fb.Get("/me/home");
+            var friendsList = new List<FacebookFeedModel>();
+            foreach (dynamic post in myInfo.data)
+            {
+                if (post.likes != null)
+                {
+                    friendsList.Add(new FacebookFeedModel()
+                    {
+                        Name = post.from.name,
+                        Message = post.message,
+                        Likes = post.likes.data.Count
+                    });
+                }//if
+                else {
+                    friendsList.Add(new FacebookFeedModel
+                    {
+                        Name = post.from.name,
+                        Message = post.message,
+                        Likes = 0
+                    });
+                }
+            }
 
             return View(friendsList);
         }

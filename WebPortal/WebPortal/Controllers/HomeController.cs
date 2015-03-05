@@ -1,55 +1,30 @@
-﻿using System;
+﻿using Facebook;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WebPortal.Models;
+using WebPortal.Controllers;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity.Owin;
+using Owin;
 
 namespace WebPortal.Controllers
 {
     [RequireHttps]
     public class HomeController : Controller
     {
+        private AccountController ac = new AccountController();
+        private System.Threading.Tasks.Task<ActionResult> test;
+        [Authorize]
         public ActionResult Index()
         {
-            var owinContext = HttpContext.GetOwinContext();
-            var authentication = owinContext.Authentication;
-            var user = authentication.User;
-            var claim = (user.Identity as System.Security.Claims.ClaimsIdentity).FindFirst("urn:facebook:access_token");
-
-            string accessToken = null;
-            if (claim != null)
-                accessToken = claim.Value;
-
-            string sURL;
-            sURL = "https://graph.facebook.com/";
-            sURL += "" + accessToken + "/me";
-
-            if (accessToken != null)
-            {
-                WebRequest wrGETURL;
-                wrGETURL = WebRequest.Create(sURL);
-
-                System.IO.Stream objStream;
-                objStream = wrGETURL.GetResponse().GetResponseStream();
-
-                StreamReader objReader = new StreamReader(objStream);
-
-                string sLine = "";
-                int i = 0;
-
-                while (sLine != null)
-                {
-                    i++;
-                    sLine = objReader.ReadLine();
-                    if (sLine != null)
-                        Console.WriteLine("{0}:{1}", i, sLine);
-                }
-                Console.ReadLine();
-            }
-
-            return View();
+            return View(this.ac.FacebookFeed());
         }
 
         public ActionResult About()
