@@ -1,1 +1,16 @@
-﻿<div ng-app="stock" ng-controller="StockCtrl">{{stocks}}</div>
+﻿<div ng-app="stock" ng-controller="StockCtrl">
+    <table class="table table-condensed">
+        <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Change</th>
+        </tr>
+        <tr ng-repeat="stock in stocks">
+            <td>{{stock.Symbol}}</td>
+            <td>{{stock.Name}}</td>
+            <td>{{stock.LastPrice}}</td>
+            <td>{{stock.Change}}</td>
+        </tr>
+    </table>
+</div>
