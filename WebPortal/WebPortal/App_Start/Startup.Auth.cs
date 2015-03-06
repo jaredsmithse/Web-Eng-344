@@ -51,6 +51,7 @@ namespace WebPortal
             x.Scope.Add("email");
             x.Scope.Add("friends_about_me");
             x.Scope.Add("friends_photos");
+            x.Scope.Add("read_stream");
             x.AppId = "1549521788629862";
             x.AppSecret = "3072d557ae33bd64013e58ed3dc44006";
             x.Provider = new FacebookAuthenticationProvider()
