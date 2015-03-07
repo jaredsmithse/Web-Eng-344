@@ -11,6 +11,9 @@ namespace WebPortal.Models{
 
         public string Message { get; set; }
 
+        // This may be null
+        public string Link { get; set; }
+
         public int Likes { get; set; }
     }
 }

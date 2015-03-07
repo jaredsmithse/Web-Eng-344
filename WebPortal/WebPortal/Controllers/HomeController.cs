@@ -44,6 +44,15 @@ namespace WebPortal.Controllers
         {
             //return View(this.ac.FacebookFeed()); // Original Code
             //var claimsforUser = await ac.UserManager.GetClaimsAsync(User.Identity.GetUserId()); // Code copied from User Manager
+            
+            // Types of posts we want to show
+            var validTypes = new List<String>();
+            validTypes.Add("status");
+            validTypes.Add("link");
+            validTypes.Add("photo");
+            validTypes.Add("user");
+            validTypes.Add("video");
+
             var claimsforUser = await UserManager.GetClaimsAsync(User.Identity.GetUserId()); // Copied UserManager stuff from account controller so we wouldn't need to use it
             var access_token = claimsforUser.FirstOrDefault(x => x.Type == "FacebookAccessToken").Value;
             var fb = new FacebookClient(access_token);
@@ -53,12 +62,18 @@ namespace WebPortal.Controllers
             var friendsList = new List<FacebookFeedModel>();
             foreach (dynamic post in myInfo.data)
             {
+                // Only show certain types of posts for simplicity
+                if (post.type == null || !validTypes.Contains(post.type)) continue;
+
+                // Skip posts with no messages
+                if (post.message == null) continue;
                 if (post.likes != null)
                 {
                     friendsList.Add(new FacebookFeedModel()
                     {
                         Name = post.from.name,
                         Message = post.message,
+                        Link = post.link,
                         Likes = post.likes.data.Count
                     });
                 }//if
@@ -67,6 +82,7 @@ namespace WebPortal.Controllers
                     {
                         Name = post.from.name,
                         Message = post.message,
+                        Link = post.link,
                         Likes = 0
                     });
                 }
