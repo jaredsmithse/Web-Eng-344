@@ -58,7 +58,9 @@ namespace WebPortal.Controllers
             var fb = new FacebookClient(access_token);
             fb.AppId = 1549521788629862 + "";
             fb.AppSecret = "3072d557ae33bd64013e58ed3dc44006";
-            dynamic myInfo = fb.Get("/me/home");
+            var parameters = new Dictionary<string, object>();
+            parameters["limit"] = "100";
+            dynamic myInfo = fb.Get("/me/home", parameters);
             var friendsList = new List<FacebookFeedModel>();
             foreach (dynamic post in myInfo.data)
             {
