@@ -1,7 +1,8 @@
 ﻿@model WebPortal.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>Click the button below to log in with Facebook</h4>
+<h4>To use this site you must have a valid Facebook account</h4>
+<h4>Click the button below to log in</h4>
 <hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
