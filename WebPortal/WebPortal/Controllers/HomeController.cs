@@ -17,6 +17,7 @@ using Owin;
 namespace WebPortal.Controllers
 {
     [RequireHttps]
+    [Authorize]
     public class HomeController : Controller
     {
         private AccountController ac = new AccountController();

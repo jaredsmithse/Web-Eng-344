@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace WebPortal.Controllers
 {
+    [Authorize]
     public class CalendarController : Controller
     {
         //

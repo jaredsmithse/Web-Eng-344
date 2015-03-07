@@ -10,6 +10,7 @@ using WebPortal.Models;
 
 namespace WebPortal.Controllers
 {
+    [Authorize]
     public class StockController : Controller
     {
         //
