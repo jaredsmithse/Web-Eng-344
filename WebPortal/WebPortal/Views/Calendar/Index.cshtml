@@ -2,4 +2,17 @@
     ViewBag.Title = "Calendar";
 }
 
+<link rel='stylesheet' href='~/Content/fullcalendar.min.css' />
+<script src='~/Scripts/moment.min.js'></script>
+<script src='~/Scripts/fullcalendar.min.js'></script>
+
 <h2>Calendar</h2>
+<div id="calendar"></div>
+
+<script>
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            // options and callbacks go here
+        })
+    });
+</script>
