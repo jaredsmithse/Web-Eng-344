@@ -16,4 +16,10 @@ namespace WebPortal.Models{
 
         public int Likes { get; set; }
     }
+    public class UpdateStatusViewModel
+    {
+        public string Message { get; set; }
+
+        public string Status { get; set; }
+    }
 }

@@ -93,6 +93,29 @@ namespace WebPortal.Controllers
             return View(friendsList);
         }
 
+        [HttpGet]
+        public ActionResult UpdateStatus()
+        {
+            return View(new UpdateStatusViewModel());
+        }
+
+        [HttpPost]
+        public ActionResult UpdateStatus(String status)
+        {
+            var vm = new UpdateStatusViewModel();
+            if (status == null || status == "")
+            {
+                vm.Message = "Your status cannot be empty";
+            }
+            else
+            {
+                // TODO actually update facebook status here. If it doesn't work use Message as error message, like this line does
+                vm.Message = "Unable to update status. Please try again.";
+            }
+            vm.Status = status;
+            return View(vm);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

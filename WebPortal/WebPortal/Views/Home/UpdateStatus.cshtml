@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "UpdateStatus";
+}
+
+@model WebPortal.Models.UpdateStatusViewModel
+
+<h2>Update Status</h2>
+
+@using (Html.BeginForm())
+{
+    
+    if (@Model.Message != null)
+    {
+        <h4>@Model.Message</h4>
+    }
+    <form>
+        Input your status update here:<br>
+        <input type="text" name="status" value="@Model.Status">
+        <input type="submit" value="Submit">
+    </form>
+}
+

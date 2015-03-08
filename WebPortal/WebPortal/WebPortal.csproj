@@ -242,6 +242,7 @@
     <Content Include="Views\Home\_StocksPartial.cshtml" />
     <Content Include="Views\Home\_FacebookFeed.cshtml" />
     <Content Include="Views\Account\FacebookInfo.cshtml" />
+    <Content Include="Views\Home\UpdateStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Facebook\" />
