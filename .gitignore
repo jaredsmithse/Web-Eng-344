@@ -8,5 +8,5 @@
 #/WebPortal/WebPortalTests/bin/*
 /WebPortal/WebPortalTests/obj/*
 /WebPortal/WebPortal/App_data/*
-*.dll
+#*.dll
 *.suo
