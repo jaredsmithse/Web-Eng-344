@@ -2,7 +2,7 @@
     .module('stock', ['ngResource'])
     .factory('TopFive', ['$resource',
         function ($resource) {
-            return $resource('/Stock/Quote');
+            return $resource('/R1/Stock/Quote');
         }])
     .controller('StockCtrl', ['$scope', '$q', 'TopFive',
         function ($scope, $q, TopFive) {

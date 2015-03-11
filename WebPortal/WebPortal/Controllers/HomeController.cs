@@ -60,37 +60,46 @@ namespace WebPortal.Controllers
             fb.AppSecret = "3072d557ae33bd64013e58ed3dc44006";
             var parameters = new Dictionary<string, object>();
             parameters["limit"] = "100";
-            dynamic myInfo = fb.Get("/me/home", parameters);
-            var friendsList = new List<FacebookFeedModel>();
-            foreach (dynamic post in myInfo.data)
+            try
             {
-                // Only show certain types of posts for simplicity
-                if (post.type == null || !validTypes.Contains(post.type)) continue;
-
-                // Skip posts with no messages
-                if (post.message == null) continue;
-                if (post.likes != null)
+                dynamic myInfo = fb.Get("/me/home", parameters);
+                var friendsList = new List<FacebookFeedModel>();
+                foreach (dynamic post in myInfo.data)
                 {
-                    friendsList.Add(new FacebookFeedModel()
-                    {
-                        Name = post.from.name,
-                        Message = post.message,
-                        Link = post.link,
-                        Likes = post.likes.data.Count
-                    });
-                }//if
-                else {
-                    friendsList.Add(new FacebookFeedModel
-                    {
-                        Name = post.from.name,
-                        Message = post.message,
-                        Link = post.link,
-                        Likes = 0
-                    });
-                }
-            }
+                    // Only show certain types of posts for simplicity
+                    if (post.type == null || !validTypes.Contains(post.type)) continue;
 
-            return View(friendsList);
+                    // Skip posts with no messages
+                    if (post.message == null) continue;
+                    if (post.likes != null)
+                    {
+                        friendsList.Add(new FacebookFeedModel()
+                        {
+                            Name = post.from.name,
+                            Message = post.message,
+                            Link = post.link,
+                            Likes = post.likes.data.Count
+                        });
+                    }//if
+                    else
+                    {
+                        friendsList.Add(new FacebookFeedModel
+                        {
+                            Name = post.from.name,
+                            Message = post.message,
+                            Link = post.link,
+                            Likes = 0
+                        });
+                    }
+                }
+
+                return View(friendsList);
+            }
+            catch (FacebookOAuthException e)
+            {
+                //TODO display an error in place of the news feed
+                return View();
+            }
         }
 
         [HttpGet]

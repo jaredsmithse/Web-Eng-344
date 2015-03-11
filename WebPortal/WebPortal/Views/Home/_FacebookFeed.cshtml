@@ -5,7 +5,7 @@
     <h2>Facebook NewsFeed</h2>
     @model IList<WebPortal.Models.FacebookFeedModel>
 
-    if (Model.Count > 0)
+    if (Model != null && Model.Count > 0)
     {
         <ul style="list-style-type: none; margin: 0; padding:0;">
             <li class="header clearfix">
