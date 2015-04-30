@@ -3,10 +3,10 @@
 ################################################################################
 
 /WebPortal/WebPortal/WebPortal.csproj.user
-#/WebPortal/WebPortal/bin/*
+/WebPortal/WebPortal/bin/*
 /WebPortal/WebPortal/obj/*
-#/WebPortal/WebPortalTests/bin/*
+/WebPortal/WebPortalTests/bin/*
 /WebPortal/WebPortalTests/obj/*
 /WebPortal/WebPortal/App_data/*
-#*.dll
+*.dll
 *.suo
