@@ -6,6 +6,8 @@
     @Scripts.Render("~/bundles/angular")
 }
 
+@model WebPortal.Models.HomePageViewModel
+
 <div class="row">
     <div class="col-md-8">
         @Html.ActionLink("Update Status", "UpdateStatus")
@@ -17,7 +19,12 @@
                 @Html.ActionLink("Calendar", "Index", "Calendar", new { @class = "btn btn-default btn-xs pull-right" })
                 <h3 class="panel-title">Today's Events</h3>
             </div>
-            <p>Today's events (from the calendar) will go here.</p>
+            <ul>
+                @foreach(var e in Model.todaysEvents)
+                {
+                    <li>@e.title <br /> @e.start - @e.end</li>
+                }
+            </ul>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">

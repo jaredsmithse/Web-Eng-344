@@ -93,7 +93,11 @@ namespace WebPortal.Controllers
                     }
                 }
 
-                return View(friendsList);
+                var HomePage = new HomePageViewModel();
+                HomePage.friendsList = friendsList;
+                HomePage.todaysEvents = getEventsForDay(DateTime.Now);
+
+                return View(HomePage);
             }
             catch (FacebookOAuthException e)
             {
@@ -147,5 +151,24 @@ namespace WebPortal.Controllers
 
             return View();
         }
+        public List<CalEvent> getEventsForDay(DateTime day)
+        {
+            using (var db = new WebPortalContext())
+            {
+                // TODO only grab events for current user
+                var events = db.CalEvents.ToList<CalEvent>();
+
+                List<CalEvent> eventsForDay = new List<CalEvent>();
+                foreach(var e in events)
+                {
+                    if(e.start != null)
+                        if (e.start.Value.Date == DateTime.Now.Date)
+                            eventsForDay.Add(e);
+                }
+
+                return eventsForDay;
+            }
+        }
+
     }
 }

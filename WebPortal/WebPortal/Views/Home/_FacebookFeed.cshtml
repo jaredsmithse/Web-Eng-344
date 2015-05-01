@@ -3,9 +3,8 @@
 
 
     <h2>Facebook NewsFeed</h2>
-    @model IList<WebPortal.Models.FacebookFeedModel>
 
-    if (Model != null && Model.Count > 0)
+    if (Model != null && Model.friendsList.Count > 0)
     {
         <ul style="list-style-type: none; margin: 0; padding:0;">
             <li class="header clearfix">
@@ -24,7 +23,7 @@
             </li>
         </ul>
         <ul style="list-style-type: none; margin: 0; padding:0;">
-            @foreach (var post in Model)
+            @foreach (var post in Model.friendsList)
             {
                 <li class="ui-widget-content clearfix" style="margin: 25px">
                     <div class="col-md-3">
@@ -56,7 +55,7 @@
                     <td>Link</td>
                     <td>Number of Likes</td>
                 </tr>
-                @foreach (var post in Model)
+                @foreach (var post in Model.friendsList)
                 {
                     <div class="col-md-3">
                         <tr>
