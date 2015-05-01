@@ -62,5 +62,21 @@ namespace WebPortal.Controllers
             }
             return View("Index");
         }
+
+        public ActionResult ExportEvents()
+        {
+            string csv = "title\tstart\tend\n";
+            using (var db = new WebPortalContext())
+            {
+                // TODO only grab events for current user
+                var events = db.CalEvents.ToList<CalEvent>();
+                foreach(var e in events)
+                {
+                    csv += e.title + "\t" + e.start + "\t" + e.end + "\n";
+                }
+            }
+            string fileName = "CalendarEventData.csv";
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", fileName);
+        }
 	}
 }

@@ -99,7 +99,7 @@ namespace WebPortal.Controllers
 
                 return View(HomePage);
             }
-            catch (FacebookOAuthException e)
+            catch (FacebookOAuthException)
             {
                 //TODO display an error in place of the news feed
                 return View();
