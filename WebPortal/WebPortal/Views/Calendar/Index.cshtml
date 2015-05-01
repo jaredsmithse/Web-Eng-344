@@ -7,13 +7,75 @@
 <script src='~/Scripts/fullcalendar.min.js'></script>
 
 <h2>Calendar</h2>
+<a id="NewEventDialog" class="btn btn-primary pull-right"><span class="glyphicon"></span>Create New Event</a>
 <div id="calendar"></div>
+
+@using(Html.BeginForm("addEvent", "Calendar", FormMethod.Post, new { @id="dialog-form", @title="Create New Event" }))
+{
+    @Html.Label("Title") <br />
+    @Html.TextBox("title")<br />
+    @Html.Label("Start") <br />
+    @Html.TextBox("start")<br />
+    @Html.Label("End") <br />
+    @Html.TextBox("end")<br />
+
+    //@Html.CheckBox("allDay", true)
+    <input type="submit" value="Create Event" id="submitBtn"/>
+}
+
 
 <script>
     $(document).ready(function () {
-        $('#calendar').fullCalendar({
-            // options and callbacks go here
-            // See here: http://fullcalendar.io/docs/usage/
-        })
+        $.ajax({
+            url: '@Url.Action("getEvents", "Calendar")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log("Success Data: " + data);
+                $('#calendar').fullCalendar({
+                    events: data
+                    // options and callbacks go here
+                    // See here: http://fullcalendar.io/docs/usage/
+                })
+            },
+            error: function (data) {
+                console.log("Error Data: " + data);
+                alert("Unable to load Calendar. Got this back: " + data)
+            }
+        });
+
+        dialog = $("#dialog-form").dialog({
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true
+        });
+
+        $("#NewEventDialog").on("click", function () {
+            dialog.dialog( "open" );
+        });
+
+        // Enable Date Picker
+        //$("#start").datepicker();
+        //$("#end").datepicker();
+
+        $("#start").datetimepicker();
+        $("#end").datetimepicker();
+
+        // Today
+        var defaultEndDate = new Date();
+        var defaultStartDate = new Date();
+        //defaultStartDate.setDate(defaultStartDate.getDate() - 30);
+
+        //$("#start").val($.datepicker.formatDate('m/dd/yy', defaultStartDate));
+        //$("#end").val($.datepicker.formatDate('m/dd/yy', defaultEndDate));
+
+        $("#title").val(""); // Value was getting set to "Calendar", so reset it to empty first
+        $("#title").attr("placeholder", "Event Title Here");
+
+        $('#dialog-form').submit(function () {
+            dialog.dialog("close");
+        });
+
     });
 </script>

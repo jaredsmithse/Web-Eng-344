@@ -32,7 +32,12 @@ namespace WebPortal
                 {
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(20),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
+                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager)),
+                    // EJ - I added this line here as a workaround I found here:
+                    // https://katanaproject.codeplex.com/discussions/565294
+                    // Was having some weird null reference problem relating to cookies or something. Not sure what this workaround does
+                    // But it seems to be working
+                    OnException = context => { }
                 }
             });
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -52,7 +57,7 @@ namespace WebPortal
             x.Scope.Add("friends_about_me");
             x.Scope.Add("friends_photos");
             x.Scope.Add("read_stream");
-            //x.Scope.Add("publish_stream");
+            x.Scope.Add("publish_stream");
             x.AppId = "1549521788629862";
             x.AppSecret = "3072d557ae33bd64013e58ed3dc44006";
             x.Provider = new FacebookAuthenticationProvider()
