@@ -16,7 +16,7 @@
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                @Html.ActionLink("Calendar", "Index", "Calendar", new { @class = "btn btn-default btn-xs pull-right" })
+                @Html.ActionLink("Calendar", "Index", "Calendar", null, new { @class = "btn btn-default btn-xs pull-right" })
                 <h3 class="panel-title">Today's Events</h3>
             </div>
             <ul>
@@ -28,14 +28,14 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                @Html.ActionLink("Full Report", "Index", "Stock", new { @class = "btn btn-default btn-xs pull-right" })
+                @Html.ActionLink("Full Report", "Index", "Stock", null, new { @class = "btn btn-default btn-xs pull-right" })
                 <h3 class="panel-title">Top Five Stocks</h3>
             </div>
             @Html.Partial("_StocksPartial")
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                @Html.ActionLink("Archive", "Index", "Chat", new { @class = "btn btn-default btn-xs pull-right" })
+                @Html.ActionLink("Archive", "Index", "Chat", null, new { @class = "btn btn-default btn-xs pull-right" })
                 <h3 class="panel-title">Chat Room</h3>
             </div>
             <p>Chat room (most recent messages plus input) will go here.</p>
