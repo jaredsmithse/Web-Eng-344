@@ -122,17 +122,23 @@ namespace WebPortal.Controllers
             }
             else
             {
-                // TODO actually update facebook status here. If it doesn't work use Message as error message, like this line does
-                var claimsforUser = await UserManager.GetClaimsAsync(User.Identity.GetUserId()); // Copied UserManager stuff from account controller so we wouldn't need to use it
-                var access_token = claimsforUser.FirstOrDefault(x => x.Type == "FacebookAccessToken").Value;
-                var fb = new FacebookClient(access_token);
-                fb.AppId = 1549521788629862 + "";
-                fb.AppSecret = "3072d557ae33bd64013e58ed3dc44006";
-                var parameters = new Dictionary<string, object>();
-                parameters["message"] = status;
-                dynamic myInfo = fb.Post("/me/feed", parameters);
-
-                vm.Message = "Unable to update status. Please try again.";
+                try
+                {
+                    // TODO actually update facebook status here. If it doesn't work use Message as error message, like this line does
+                    var claimsforUser = await UserManager.GetClaimsAsync(User.Identity.GetUserId()); // Copied UserManager stuff from account controller so we wouldn't need to use it
+                    var access_token = claimsforUser.FirstOrDefault(x => x.Type == "FacebookAccessToken").Value;
+                    var fb = new FacebookClient(access_token);
+                    fb.AppId = 1549521788629862 + "";
+                    fb.AppSecret = "3072d557ae33bd64013e58ed3dc44006";
+                    var parameters = new Dictionary<string, object>();
+                    parameters["message"] = status;
+                    dynamic myInfo = fb.Post("/me/feed", parameters);
+                    return RedirectToAction("Index", "Home", new { area = "" });
+                }
+                catch (Exception)
+                {
+                    vm.Message = "Unable to update status. Please try again.";
+                }
             }
             vm.Status = status;
             return View(vm);
