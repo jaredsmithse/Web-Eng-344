@@ -11,6 +11,8 @@
 <div class="row">
     <div class="col-md-8">
         @Html.ActionLink("Update Status", "UpdateStatus")
+        <br />
+        <a href="https://www.facebook.com/messages/new/" target="_blank">Send a Message</a>
         @Html.Partial("_FacebookFeed")
     </div>
     <div class="col-md-4">
@@ -20,6 +22,10 @@
                 <h3 class="panel-title">Today's Events</h3>
             </div>
             <ul>
+                @if(Model.todaysEvents.Count == 0)
+                {
+                    <li>No Events for Today</li>
+                }
                 @foreach(var e in Model.todaysEvents)
                 {
                     <li>@e.title <br /> @e.start - @e.end</li>
