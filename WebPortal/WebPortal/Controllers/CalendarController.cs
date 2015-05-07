@@ -10,20 +10,9 @@ namespace WebPortal.Controllers
     [Authorize]
     public class CalendarController : Controller
     {
-        //
         // GET: /Calendar/
         public ActionResult Index()
         {
-            var u = User.Identity.Name;
-
-            /*
-            using (var db = new CalEventDBContext())
-            {
-                var events = db.CalEvents.ToList<CalEvent>();
-                Console.WriteLine(events);
-            }
-            */
-
             return View();
         }
 
@@ -31,8 +20,7 @@ namespace WebPortal.Controllers
         {
             using (var db = new WebPortalContext())
             {
-                // TODO only grab events for current user
-                var events = db.CalEvents.ToList<CalEvent>();
+                var events = db.CalEvents.Where(e => e.user == User.Identity.Name).ToList<CalEvent>();
 
                 Object[] eventsArray = new Object[events.Count];
                 for (int i = 0; i < events.Count; i++ )
@@ -45,10 +33,18 @@ namespace WebPortal.Controllers
             }
         }
 
-        public ActionResult addEvent(string title, DateTime start, DateTime end)
+        public ActionResult addEvent(string title, DateTime? start, DateTime? end)
         {
-            // TODO check start and end != null
-            // TODO check end time > start time
+            if (start == null || end == null)
+            {
+                return Content("Start and End date cannot be left empty. Click Back to return to Calendar.");
+            }
+
+            if (start > end)
+            {
+                return Content("Start Date cannot come after End Date. Click Back to return to Calendar.");
+            }
+
             using (var db = new WebPortalContext())
             {
                 var e = new CalEvent();
@@ -68,8 +64,7 @@ namespace WebPortal.Controllers
             string csv = "title\tstart\tend\n";
             using (var db = new WebPortalContext())
             {
-                // TODO only grab events for current user
-                var events = db.CalEvents.ToList<CalEvent>();
+                var events = db.CalEvents.Where(e => e.user == User.Identity.Name).ToList<CalEvent>();
                 foreach(var e in events)
                 {
                     csv += e.title + "\t" + e.start + "\t" + e.end + "\n";
