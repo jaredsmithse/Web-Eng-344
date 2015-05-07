@@ -24,6 +24,14 @@
 }
 
 @Html.ActionLink("Export Event Data", "ExportEvents", "Calendar")
+<br />
+<br />
+@Html.Label("Upload an Event Data file to add the events to your calendar") <br />
+@using (Html.BeginForm("UploadEvents", "Calendar", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" />
+    <input type="submit" value="Upload" />
+}
 
 <script>
     $(document).ready(function () {

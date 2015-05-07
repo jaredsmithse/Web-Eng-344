@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -72,6 +73,57 @@ namespace WebPortal.Controllers
             }
             string fileName = "CalendarEventData.csv";
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", fileName);
+        }
+
+        [HttpPost]
+        public ActionResult UploadEvents(HttpPostedFileBase file)
+        {
+            // Verify that the user selected a file
+            if (file != null && file.ContentLength > 0)
+            {
+                var events = new List<CalEvent>();
+                try
+                {
+                    // Read File
+                    string fileData = new StreamReader(file.InputStream).ReadToEnd();
+                    // Parse
+                    string[] fileDataArray = fileData.Split('\n');
+                    // Start at [1] because [0] is header
+                    for (int i = 1; i < fileDataArray.Length; i++)
+                    {
+                        var eventData = fileDataArray[i];
+                        if (eventData != null && eventData.Length > 0)
+                        {
+                            // Form of line is Title\tStart\tEnd
+                            var eventDataArray = eventData.Split('\t');
+                            var e = new CalEvent();
+                            e.title = eventDataArray[0];
+                            e.start = Convert.ToDateTime(eventDataArray[1]);
+                            e.end = Convert.ToDateTime(eventDataArray[2]);
+                            e.user = User.Identity.Name;
+                            events.Add(e);
+                        }
+                    }
+                }
+                catch
+                {
+                    return Content("Error trying to read file. Click Back and try a different File");
+                }
+
+                try
+                {
+                    using (var db = new WebPortalContext())
+                    {
+                        db.CalEvents.AddRange(events);
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    return Content("Error trying to save to Database. Click Back and try again");
+                }
+            }
+            return RedirectToAction("Index");
         }
 	}
 }
