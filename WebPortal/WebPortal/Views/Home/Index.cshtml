@@ -22,13 +22,14 @@
                 <h3 class="panel-title">Today's Events</h3>
             </div>
             <ul>
-                @if(Model.todaysEvents.Count == 0)
+                @if(Model == null || Model.todaysEvents == null || Model.todaysEvents.Count == 0)
                 {
                     <li>No Events for Today</li>
-                }
-                @foreach(var e in Model.todaysEvents)
-                {
-                    <li>@e.title <br /> @e.start - @e.end</li>
+                } else {
+                    foreach(var e in Model.todaysEvents)
+                    {
+                        <li>@e.title <br /> @e.start - @e.end</li>
+                    }
                 }
             </ul>
         </div>

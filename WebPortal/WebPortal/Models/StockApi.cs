@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using System.Diagnostics;
 
 namespace WebPortal.Models
 {
@@ -13,7 +14,7 @@ namespace WebPortal.Models
         public string Status { get; set; }
         public string Name { get; set; }
         public string Symbol { get; set; }
-        public float LastPrice { get; set; }
+        public decimal LastPrice { get; set; }
         public float Change { get; set; }
         public float ChangePercent { get; set; }
         public string Timestamp { get; set; }
@@ -37,6 +38,7 @@ namespace WebPortal.Models
             using (HttpClient client = new HttpClient())
             {
                 var res = await client.GetStringAsync(uri + symbol);
+                Debug.WriteLine("Symbol: " + symbol + " -> " + res);
                 return JsonConvert.DeserializeObject<Stock>(res);
             }
         }
