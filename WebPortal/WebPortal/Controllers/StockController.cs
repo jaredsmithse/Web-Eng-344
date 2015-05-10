@@ -50,17 +50,8 @@ namespace WebPortal.Controllers
         {
             using (var db = new WebPortalContext())
             {
-                var stocks = db.Holdings.Where(h => h.User == User.Identity.Name).ToList<Holding>();
-                /*
-                Object[] stocksArray = new Object[stocks.Count];
-                for (int i = 0; i < stocks.Count; i++)
-                {
-                    Holding h = stocks.ElementAt(i);
-                    //TODO get current price and stuff from API and add to object below
-                    stocksArray[i] = new { title = e.title, start = e.start, end = e.end };
-                }*/
-                Debug.WriteLine(stocks.Count);
-                Debug.WriteLine(Json(stocks, JsonRequestBehavior.AllowGet));
+                var holdings = db.Holdings.Where(h => h.User == User.Identity.Name).ToList<Holding>();
+                var stocks = await new StockApi().GetStocksFromHoldings(holdings);
                 return Json(stocks, JsonRequestBehavior.AllowGet);
             }
         }
@@ -78,7 +69,7 @@ namespace WebPortal.Controllers
 
         // buy
         // Put: api/Stock/:symbol/:amt
-        [Route("api/Stock/{symbol}/{amt}"), HttpPost]//FIXME HttpPut doesn't work. (MVC 5.0 bug or something. supposedly fixed in 5.1)
+        [Route("api/Stock/{symbol}/{amt}"), HttpPut]
         public async Task<ActionResult> PutBuy(string symbol, int amt)
         {
             // get current price from api
@@ -127,7 +118,8 @@ namespace WebPortal.Controllers
         }
 
         // sell
-        // Delete: /Stock/:symbol/:amt
+        // Delete: api/Stock/:symbol/:amt
+        [Route("api/Stock/{symbol}/{amt}"), HttpDelete]
         public async Task<ActionResult> DeleteSell(string symbol, int amt)
         {
             // get current price from api

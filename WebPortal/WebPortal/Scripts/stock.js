@@ -3,7 +3,7 @@
     .factory('Stock', ['$resource',
         function ($resource) {
             return $resource('/api/Stock/:id/:amt', { id: '@id', amt: '@amt' }, {
-                'buy': { method: 'POST' },
+                'buy': { method: 'PUT' },
                 'sell': { method: 'DELETE' }
             });
         }])
@@ -32,12 +32,17 @@
             $scope.searchBuy = { amt: 1 };
 
             function refresh() {
-                $scope.myStocks = Stock.query();
+                $scope.myStocks = Stock.query(function () {
+                    for (var i = 0; i < $scope.myStocks.length; ++i) {
+                        $scope.myStocks[i].tradeAmt = 1; // initialize input value
+                    }
+                });
                 $scope.transactions = Transaction.query(function () {
                     for (var i = 0; i < $scope.transactions.length; ++i) {
+                        // parse some data points
+                        $scope.transactions[i].date = new Date(parseInt($scope.transactions[i].date.substr(6)));
                         $scope.transactions[i].type = $scope.transactions[i].buy ? "Buy" : "Sell";
                         $scope.transactions[i].total = $scope.transactions[i].Amount * $scope.transactions[i].price;
-                        console.log($scope.transactions[i]);
                     }
                 });
             };
@@ -50,8 +55,19 @@
                 });
             };
 
-            $scope.buy = function () {
-                Stock.buy({ id: $scope.searchBuy.symbol, amt: $scope.searchBuy.amt });
-                refresh();
+            $scope.buy = function (stock) {
+                var symbol = stock != null ? stock.Symbol : $scope.searchBuy.symbol;
+                var amount = stock != null ? stock.tradeAmt : $scope.searchBuy.amt;
+                Stock.buy({ id: symbol, amt: amount }, null, function () {
+                    refresh();
+                });
+            };
+
+            $scope.sell = function (stock) {
+                var symbol = stock.Symbol;
+                var amount = stock.tradeAmt;
+                Stock.sell({ id: symbol, amt: amount }, null, function () {
+                    refresh();
+                });
             };
         }]);

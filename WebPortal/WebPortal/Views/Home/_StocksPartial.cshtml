@@ -9,8 +9,8 @@
         <tr ng-repeat="stock in stocks">
             <td>{{stock.Symbol}}</td>
             <td>{{stock.Name}}</td>
-            <td>${{stock.LastPrice}}</td>
-            <td>{{stock.Change}}</td>
+            <td>{{stock.LastPrice | currency}}</td>
+            <td>{{stock.Change | currency}}</td>
         </tr>
     </table>
 </div>

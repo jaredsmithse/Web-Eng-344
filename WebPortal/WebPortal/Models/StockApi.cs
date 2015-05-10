@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
-using System.Diagnostics;
 
 namespace WebPortal.Models
 {
@@ -15,17 +14,21 @@ namespace WebPortal.Models
         public string Name { get; set; }
         public string Symbol { get; set; }
         public decimal LastPrice { get; set; }
-        public float Change { get; set; }
-        public float ChangePercent { get; set; }
+        public decimal Change { get; set; }
+        public decimal ChangePercent { get; set; }
         public string Timestamp { get; set; }
-        public float MSDate { get; set; }
+        public decimal MSDate { get; set; }
         public long MarketCap { get; set; }
         public int Volume { get; set; }
-        public float ChangeYTD { get; set; }
-        public float ChangePercentYTD { get; set; }
-        public float High { get; set; }
-        public float Low { get; set; }
-        public float Open { get; set; }
+        public decimal ChangeYTD { get; set; }
+        public decimal ChangePercentYTD { get; set; }
+        public decimal High { get; set; }
+        public decimal Low { get; set; }
+        public decimal Open { get; set; }
+
+        // Holding-specific fields
+        public int AmountOwned { get; set; }
+        public decimal Profit { get; set; }
     }
 
     public class StockApi
@@ -38,8 +41,9 @@ namespace WebPortal.Models
             using (HttpClient client = new HttpClient())
             {
                 var res = await client.GetStringAsync(uri + symbol);
-                Debug.WriteLine("Symbol: " + symbol + " -> " + res);
-                return JsonConvert.DeserializeObject<Stock>(res);
+                Stock stock = JsonConvert.DeserializeObject<Stock>(res);
+                stock.Change = decimal.Round(stock.Change, 2, MidpointRounding.AwayFromZero);
+                return stock;
             }
         }
 
@@ -47,6 +51,23 @@ namespace WebPortal.Models
         {
             string[] symbols = new[] { "AAPL", "MSFT", "GOOG", "AMZN", "FB" };
             IEnumerable<Task<Stock>> allTasks = symbols.Select(symbol => GetStockAsync(symbol));
+            Stock[] allResults = await Task.WhenAll(allTasks);
+            IEnumerable<Stock> allStocks = allResults.Select(stock => stock);
+            return allStocks;
+        }
+
+        public async Task<Stock> GetStockFromHolding(Holding holding)
+        {
+            Stock stock = await GetStockAsync(holding.Symbol);
+            stock.AmountOwned = holding.AmountOwned;
+            stock.Profit = holding.AmountSold - holding.AmountBought
+                + holding.AmountOwned * stock.LastPrice;
+            return stock;
+        }
+
+        public async Task<IEnumerable<Stock>> GetStocksFromHoldings(IEnumerable<Holding> holdings)
+        {
+            IEnumerable<Task<Stock>> allTasks = holdings.Select(holding => GetStockFromHolding(holding));
             Stock[] allResults = await Task.WhenAll(allTasks);
             IEnumerable<Stock> allStocks = allResults.Select(stock => stock);
             return allStocks;

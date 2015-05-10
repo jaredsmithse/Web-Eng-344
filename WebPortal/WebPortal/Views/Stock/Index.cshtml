@@ -15,21 +15,23 @@
         <tr>
             <td>{{searchResult.Symbol}}</td>
             <td>{{searchResult.Name}}</td>
-            <td>{{searchResult.LastPrice}}</td>
-            <td>{{searchResult.Change}}</td>
+            <td>{{searchResult.LastPrice | currency}}</td>
+            <td>{{searchResult.Change | currency}}</td>
             <td><input type="number" id="buyAmount" ng-model="searchBuy.amt" /><button ng-click="buy()">Buy {{searchBuy.amt}}</button></td>
         </tr>
     </table>
 
     <h3>My Stocks</h3>
     <table class="table table-condensed">
-        <tr><th>Symbol</th><th>Name</th><th>Amount</th><th>Profit</th><th>Trade</th></tr>
+        <tr><th>Symbol</th><th>Name</th><th>Amount</th><th>Last Price</th><th>Change</th><th>Profit</th><th>Trade</th></tr>
         <tr ng-repeat="stock in myStocks">
             <td>{{stock.Symbol}}</td>
-            <td>{{stock.Name}} TODO</td>
+            <td>{{stock.Name}}</td>
             <td>{{stock.AmountOwned}}</td>
-            <td>TODO</td>
-            <td>TODO</td>
+            <td>{{stock.LastPrice | currency}}</td>
+            <td>{{stock.Change | currency}}</td>
+            <td>{{stock.Profit | currency}}</td>
+            <td><input type="number" ng-model="stock.tradeAmt" /><button ng-click="buy(stock)">Buy</button><button ng-click="sell(stock)">Sell</button></td>
         </tr>
     </table>
 
@@ -37,11 +39,11 @@
     <table class="table table-condensed">
         <tr><th>Date</th><th>Symbol</th><th>Type</th><th>Amount</th><th>Price (Total)</th></tr>
         <tr ng-repeat="transaction in transactions">
-            <td>{{transaction.date}}</td>
+            <td>{{transaction.date | date : short}}</td>
             <td>{{transaction.Symbol}}</td>
             <td>{{transaction.type}}</td>
             <td>{{transaction.Amount}}</td>
-            <td>{{transaction.price}} ({{transaction.total}})</td>
+            <td>{{transaction.price | currency}} ({{transaction.total | currency}})</td>
         </tr>
     </table>
 </div>
