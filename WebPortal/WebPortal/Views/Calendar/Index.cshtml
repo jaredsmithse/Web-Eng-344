@@ -41,8 +41,10 @@
             dataType: "json",
             success: function (data) {
                 console.log("Success Data: " + data);
+                console.log(data);
                 $('#calendar').fullCalendar({
-                    events: data
+                    events: data,
+                    timezone: "local"
                     // options and callbacks go here
                     // See here: http://fullcalendar.io/docs/usage/
                 })
