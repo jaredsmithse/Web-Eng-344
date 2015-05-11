@@ -4,3 +4,66 @@
 
 <h2>Chat History</h2>
 
+<ul id="chat-list" style="list-style: none">
+</ul>
+<br>
+@using (Html.BeginForm("addMessage", "Chat", FormMethod.Post, new { @id = "dialog-form", @title = "Create New Event" }))
+{
+    @Html.Label("message") <br />
+    @Html.TextArea("message", new { @id = "message-input", @cols = 50, @rows = 4, @placeholder = "Enter a message..." }) <br />
+
+    <input type="submit" value="Post Message" id="submitBtn" />
+}
+<script>
+    $(document).ready(function () {
+        $('#message-input').val('');
+        $.ajax({
+            url: '@Url.Action("getHist", "Chat")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log("Success Data: " + data);
+                console.log(data);
+                var item = "";
+                for (var i = 0; i < data.length; i++) {
+                    var message = data[i];
+                    item = item + "<li>" + message.user + " <strong> said: </strong>" + message.message + "</li>";
+
+                }
+                $('#chat-list').html(item);
+            },
+            error: function (data) {
+                console.log("Error Data: " + data);
+                alert("Unable to load Chat Feature. Got this back: " + data)
+            }
+
+        });
+    });
+</script>
+
+<script>
+    var myVar = setInterval(function () { myTimer() }, 5000);
+    function myTimer() {
+        $.ajax({
+            url: '@Url.Action("getHist", "Chat")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log("Success Data: " + data);
+                console.log(data);
+                var item = ""
+                for (var i = 0; i < data.length; i++) {
+                    var message = data[i];
+                    item = item + "<li>" + message.user + " <strong> said: </strong>" + message.message + "</li>";
+                    
+                }
+                $('#chat-list').html(item);
+            },
+            error: function (data) {
+                console.log("Error Data: " + data);
+                alert("Unable to load Chat Feature. Got this back: " + data)
+            }
+
+        });
+    }
+</script>
