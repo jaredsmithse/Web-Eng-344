@@ -51,19 +51,6 @@ namespace WebPortal.Migrations
 
             }.ForEach(calevent => context.CalEvents.AddOrUpdate(calevent));
             context.SaveChanges();
-
-            new List<ChatMessage>
-            {
-                new ChatMessage() 
-                { 
-                    id=1,
-                    user = "EJUser",
-                    message = "First Chat message",
-                    timestamp = DateTime.Now
-
-                }
-            }.ForEach(message => context.ChatMessages.AddOrUpdate(message));
-            context.SaveChanges();
         }
     }
 }

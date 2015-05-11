@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Chat History";
+}
+
+<h2>Chat History</h2>
+
+<ul id="chat-list" style="list-style: none; overflow-y: auto; max-height: 600px">
+</ul>
+
+<script>
+    $(document).ready(function () {
+        $('#message-input').val('');
+        $.ajax({
+            url: '@Url.Action("getFullHistory", "Chat")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log("Success Data: " + data);
+                console.log(data);
+                var item = "";
+                for (var i = 0; i < data.length; i++) {
+                    var message = data[i];
+                    item = item + "<li>" + message.user + " - " + message.time + " <strong> said: </strong>" + message.message + "</li>";
+
+                }
+                $('#chat-list').html(item);
+            },
+            error: function (data) {
+                console.log("Error Data: " + data);
+                alert("Unable to load Chat Feature. Got this back: " + data)
+            }
+
+        });
+    });
+</script>

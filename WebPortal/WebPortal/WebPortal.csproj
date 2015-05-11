@@ -319,6 +319,7 @@
     <Content Include="Views\Home\_FacebookFeed.cshtml" />
     <Content Include="Views\Account\FacebookInfo.cshtml" />
     <Content Include="Views\Home\UpdateStatus.cshtml" />
+    <Content Include="Views\Chat\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Facebook\" />
