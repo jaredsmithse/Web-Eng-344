@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201505110156389_ChatMessages.Designer.cs">
       <DependentUpon>201505110156389_ChatMessages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505110339513_FixPlease.cs" />
+    <Compile Include="Migrations\201505110339513_FixPlease.Designer.cs">
+      <DependentUpon>201505110339513_FixPlease.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CalEvent.cs" />
@@ -274,6 +278,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\stock.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls-0.13.0.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -337,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505110156389_ChatMessages.resx">
       <DependentUpon>201505110156389_ChatMessages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505110339513_FixPlease.resx">
+      <DependentUpon>201505110339513_FixPlease.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,5 +1,5 @@
 ﻿angular
-    .module('stock', ['ngResource'])
+    .module('stock', ['ngResource', 'ui.bootstrap'])
     .factory('Stock', ['$resource',
         function ($resource) {
             return $resource('/api/Stock/:id/:amt', { id: '@id', amt: '@amt' }, {
@@ -23,14 +23,15 @@
             refresh();
             setInterval(refresh, 10000);
         }])
-    .controller('StockPageCtrl', ['$scope', '$q', '$timeout', 'Stock', 'Transaction',
-        function ($scope, $q, $timeout, Stock, Transaction) {
+    .controller('StockPageCtrl', ['$scope', '$q', '$timeout', '$modal', 'Stock', 'Transaction',
+        function ($scope, $q, $timeout, $modal, Stock, Transaction) {
             $scope.searchBuy = { amt: 1 };
 
             function refresh() {
                 $scope.myStocks = Stock.query(function () {
                     for (var i = 0; i < $scope.myStocks.length; ++i) {
                         $scope.myStocks[i].tradeAmt = 1; // initialize input value
+                        $scope.myStocks[i].Note = JSON.parse($scope.myStocks[i].Note);
                     }
                     $timeout(function () {
                         dataTableStocks();
@@ -69,6 +70,29 @@
                 var amount = stock.tradeAmt;
                 Stock.sell({ id: symbol, amt: amount }, null, function () {
                     refresh();
+                });
+            };
+
+            $scope.note = function (stock) {
+                $modal.open({
+                    templateUrl: 'NoteModalContent.html',
+                    backdrop: true,
+                    windowClass: 'modal',
+                    controller: function ($scope, $modalInstance, $log, stock) {
+                        $scope.stock = stock;
+                        $scope.ok = function () {
+                            Stock.buy({ id: $scope.stock.Symbol }, JSON.stringify($scope.stock.Note));
+                            $modalInstance.dismiss('cancel');
+                        };
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    },
+                    resolve: {
+                        stock: function () {
+                            return stock;
+                        }
+                    }
                 });
             };
         }]);

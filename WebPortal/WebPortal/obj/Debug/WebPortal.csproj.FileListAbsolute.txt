@@ -116,3 +116,5 @@ D:\Classes\Web\project\WebPortal\WebPortal\bin\Elmah.Mvc.dll
 D:\Classes\Web\project\WebPortal\WebPortal\obj\Debug\WebPortal.Migrations.Initial.resources
 D:\Classes\Web\project\WebPortal\WebPortal\obj\Debug\WebPortal.csproj.GenerateResource.Cache
 D:\Classes\Web\project\WebPortal\WebPortal\obj\Debug\WebPortal.Migrations.Transactions.resources
+D:\Classes\Web\project\WebPortal\WebPortal\obj\Debug\WebPortal.Migrations.ChatMessages.resources
+D:\Classes\Web\project\WebPortal\WebPortal\obj\Debug\WebPortal.Migrations.FixPlease.resources

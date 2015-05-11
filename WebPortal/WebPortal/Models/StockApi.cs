@@ -29,6 +29,7 @@ namespace WebPortal.Models
         // Holding-specific fields
         public int AmountOwned { get; set; }
         public decimal Profit { get; set; }
+        public string Note { get; set; }
     }
 
     public class StockApi
@@ -53,6 +54,7 @@ namespace WebPortal.Models
             stock.AmountOwned = holding.AmountOwned;
             stock.Profit = holding.AmountSold - holding.AmountBought
                 + holding.AmountOwned * stock.LastPrice;
+            stock.Note = holding.Note;
             return stock;
         }
 
