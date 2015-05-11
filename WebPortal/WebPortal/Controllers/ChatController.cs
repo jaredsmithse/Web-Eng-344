@@ -17,6 +17,11 @@ namespace WebPortal.Controllers
             return View();
         }
 
+        public ActionResult History()
+        {
+            return View();
+        }
+
         public ActionResult getHist()
         {
             using (var db = new WebPortalContext())
@@ -34,6 +39,24 @@ namespace WebPortal.Controllers
                 return json;
             }
         }
+
+        public ActionResult getFullHistory()
+        {
+            using (var db = new WebPortalContext())
+            {
+                var events = db.ChatMessages.ToList<ChatMessage>();
+
+                Object[] eventsArray = new Object[events.Count];
+                for (int i = 0; i < eventsArray.Length; i++)
+                {
+                    ChatMessage e = events.ElementAt(i);
+                    eventsArray[i] = new { user = e.user, message = e.message, time = e.timestamp };
+                }
+                var json = Json(eventsArray, JsonRequestBehavior.AllowGet);
+                return json;
+            }
+        }
+
         public ActionResult addMessage(string message)
         {
             if (message != null && !message.Trim().Equals("") )
