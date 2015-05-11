@@ -161,8 +161,7 @@ namespace WebPortal.Controllers
         {
             using (var db = new WebPortalContext())
             {
-                // TODO only grab events for current user
-                var events = db.CalEvents.ToList<CalEvent>();
+                var events = db.CalEvents.Where(e => e.user == User.Identity.Name).ToList<CalEvent>();
 
                 List<CalEvent> eventsForDay = new List<CalEvent>();
                 foreach(var e in events)
