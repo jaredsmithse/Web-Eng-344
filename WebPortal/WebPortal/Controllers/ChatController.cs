@@ -36,7 +36,7 @@ namespace WebPortal.Controllers
                         for (int i = 0; i < events.Count; i++)
                         {
                             ChatMessage e = events.ElementAt(i);
-                            eventsArray[i] = new { user = e.user, message = e.message, time = e.timestamp };
+                            eventsArray[i] = new { user = e.user, message = e.message, time = e.timestamp.ToString() };
                         }
                         var json = Json(eventsArray, JsonRequestBehavior.AllowGet);
                         return json;

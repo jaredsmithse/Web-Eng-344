@@ -54,13 +54,14 @@
                 var item = ""
                 for (var i = 0; i < data.length; i++) {
                     var message = data[i];
-                    item = item + "<li>" + message.user + " <strong> said: </strong>" + message.message + "</li>";
-                    
+                    item = item + "<li>" + message.user + " - " + message.time + " <strong> said: </strong>" + message.message + "</li>";
+
                 }
                 $('#chat-list').html(item);
             },
             error: function (data) {
                 console.log("Error Data: " + data);
+                console.log(data);
                 alert("Unable to load Chat Feature. Got this back: " + data)
             }
 
