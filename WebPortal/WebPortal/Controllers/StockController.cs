@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using WebPortal.Models;
 using System.Diagnostics;
 using System.Net;
+using System.IO;
 
 namespace WebPortal.Controllers
 {
@@ -57,11 +58,37 @@ namespace WebPortal.Controllers
                 JsonRequestBehavior.AllowGet);
         }
 
+        // update note
+        // Put: api/Stock/:symbol
+        [Route("api/Stock/{symbol}"), HttpPut]
+        public ActionResult PutNote(string symbol) //FIXME I'd like to have "[FromBody]string note" but can't seem to get it to work. found this workaround:
+        {
+            Stream req = Request.InputStream;
+            req.Seek(0, System.IO.SeekOrigin.Begin);
+            string note = new StreamReader(req).ReadToEnd();
+
+            using (var db = new WebPortalContext())
+            {
+                var holding = db.Holdings.FirstOrDefault(
+                    h => h.User == User.Identity.Name
+                    && h.Symbol == symbol);
+
+                if (holding != null)
+                {
+                    holding.Note = note;
+                    db.SaveChanges();
+                }
+
+                return View("Index");
+            }
+        }
+
         // buy
         // Put: api/Stock/:symbol/:amt
         [Route("api/Stock/{symbol}/{amt}"), HttpPut]
         public async Task<ActionResult> PutBuy(string symbol, int amt)
         {
+            Debug.WriteLine("PutBuy " + symbol + " Amount: " + amt);
             // get current price from api
             var stock = await new StockApi().GetStockAsync(symbol);
             if (stock.Status != "SUCCESS")

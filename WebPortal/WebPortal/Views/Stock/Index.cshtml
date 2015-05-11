@@ -24,7 +24,7 @@
 
     <h3>My Stocks</h3>
     <table id="myStocks" class="table table-condensed">
-        <thead><tr><th>Symbol</th><th>Name</th><th>Amount</th><th>Last Price</th><th>Change</th><th>Profit</th><th>Trade</th></tr></thead>
+        <thead><tr><th>Symbol</th><th>Name</th><th>Amount</th><th>Last Price</th><th>Change</th><th>Profit</th><th>Trade</th><th>Note</th></tr></thead>
         <tbody><tr ng-repeat="stock in myStocks">
             <td>{{stock.Symbol}}</td>
             <td>{{stock.Name}}</td>
@@ -33,6 +33,7 @@
             <td>{{stock.Change | currency}}</td>
             <td>{{stock.Profit | currency}}</td>
             <td style="white-space: nowrap;"><input style="width: 3em;" type="number" ng-model="stock.tradeAmt" /><button ng-click="buy(stock)">Buy</button><button ng-click="sell(stock)">Sell</button></td>
+            <td><button ng-click="note(stock)">Note</button></td>
         </tr></tbody>
         <tfoot><tr>
             <th><input id="filter-stocks-symbol" type="text" placeholder="Search Symbol" /></th>
@@ -42,8 +43,21 @@
             <th>$<input id="filter-stocks-change-min" style="width: 5em;" type="text" placeholder="min" /><br />$<input id="filter-stocks-change-max" style="width: 5em;" type="text" placeholder="max" /></th>
             <th>$<input id="filter-stocks-profit-min" style="width: 5em;" type="text" placeholder="min" /><br />$<input id="filter-stocks-profit-max" style="width: 5em;" type="text" placeholder="max" /></th>
             <th></th>
+            <th></th>
         </tr></tfoot>
     </table>
+    <script type="text/ng-template" id="NoteModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Note</h3>
+        </div>
+        <div class="modal-body">
+            <textarea style="max-width: 100%; width: 100%; height: 6em;" ng-model="stock.Note" />
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 
     <h3>Transactions</h3>
     <table id="transactions" class="table table-condensed">

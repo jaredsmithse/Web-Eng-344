@@ -15,5 +15,6 @@ namespace WebPortal.Models
         public decimal AmountBought { get; set; }
         public decimal AmountSold { get; set; }
         public int AmountOwned { get; set; }
+        public string Note { get; set; }
     }
 }
