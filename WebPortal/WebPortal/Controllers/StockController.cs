@@ -134,6 +134,18 @@ namespace WebPortal.Controllers
             return View("Index");
         }
 
+        [HttpDelete]
+        public ActionResult PurgeTransactions()
+        {
+            using (var db = new WebPortalContext())
+            {
+                var myTransactions = db.Transactions.Where(t => t.User == User.Identity.Name).ToList<Transaction>();
+                db.Transactions.RemoveRange(myTransactions);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
         // sell
         // Delete: api/Stock/:symbol/:amt
         [Route("api/Stock/{symbol}/{amt}"), HttpDelete]
@@ -242,17 +254,6 @@ namespace WebPortal.Controllers
                 {
                     return Content("Error trying to save to Database. Click Back and try again");
                 }
-            }
-            return RedirectToAction("Index");
-        }
-
-        [HttpDelete]
-        public ActionResult Delete()
-        {
-            using (var db = new WebPortalContext())
-            {
-                var myTransactions = db.Transactions.Where(t => t.User == User.Identity.Name).ToList<Transaction>();
-                db.Transactions.RemoveRange(myTransactions);
             }
             return RedirectToAction("Index");
         }
