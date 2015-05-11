@@ -32,6 +32,7 @@ namespace WebPortal
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular.min.js",
                         "~/Scripts/angular-resource.min.js",
+                        "~/Scripts/ui-bootstrap-tpls-0.13.0.min.js",
                         "~/Scripts/stock.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/dataTables").Include(

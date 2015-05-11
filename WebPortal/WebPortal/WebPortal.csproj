@@ -186,6 +186,10 @@
     <Compile Include="Migrations\201505091717261_Transactions.Designer.cs">
       <DependentUpon>201505091717261_Transactions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505110154023_Holding Note.cs" />
+    <Compile Include="Migrations\201505110154023_Holding Note.Designer.cs">
+      <DependentUpon>201505110154023_Holding Note.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CalEvent.cs" />
@@ -269,6 +273,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\stock.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls-0.13.0.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -329,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505091717261_Transactions.resx">
       <DependentUpon>201505091717261_Transactions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505110154023_Holding Note.resx">
+      <DependentUpon>201505110154023_Holding Note.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
