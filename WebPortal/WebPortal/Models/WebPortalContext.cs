@@ -16,5 +16,6 @@ namespace WebPortal.Models
         public virtual DbSet<CalEvent> CalEvents { get; set; }
         public virtual DbSet<Holding> Holdings { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<ChatMessage> ChatMessages { get; set; }
     }
 }
