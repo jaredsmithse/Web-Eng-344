@@ -47,13 +47,22 @@
 
     <h3>Transactions</h3>
     <table id="transactions" class="table table-condensed">
-        <thead><tr><th>Date</th><th>Symbol</th><th>Type</th><th>Amount</th><th>Price (Total)</th></tr></thead>
+        <thead><tr><th>Date</th><th>Symbol</th><th>Type</th><th>Amount</th><th>Stock Price</th><th>Total Price</th></tr></thead>
         <tbody><tr ng-repeat="transaction in transactions">
             <td>{{transaction.date | date : short}}</td>
             <td>{{transaction.Symbol}}</td>
             <td>{{transaction.type}}</td>
             <td>{{transaction.Amount}}</td>
-            <td>{{transaction.price | currency}} ({{transaction.total | currency}})</td>
+            <td>{{transaction.price | currency}}</td>
+            <td>{{transaction.total | currency}}</td>
         </tr></tbody>
+        <tfoot><tr>
+            <th>Start: <input id="filter-transactions-date-start" type="date" placeholder="Start Date" /><br />End: <input id="filter-transactions-date-end" type="date" placeholder="End Date" /></th>
+            <th><input id="filter-transactions-symbol" type="text" placeholder="Search Symbol" /></th>
+            <th><select><option value=""></option><option value="Buy">Buy</option><option value="Sell">Sell</option></select></th>
+            <th><input id="filter-transactions-amt-min" style="width: 5em;" type="number" placeholder="min" /><br /><input id="filter-transactions-amt-max" style="width: 5em;" type="number" placeholder="max" /></th>
+            <th>$<input id="filter-transactions-price-min" style="width: 5em;" type="text" placeholder="min" /><br />$<input id="filter-transactions-price-max" style="width: 5em;" type="text" placeholder="max" /></th>
+            <th>$<input id="filter-transactions-total-min" style="width: 5em;" type="text" placeholder="min" /><br />$<input id="filter-transactions-total-max" style="width: 5em;" type="text" placeholder="max" /></th>
+        </tr></tfoot>
     </table>
 </div>
