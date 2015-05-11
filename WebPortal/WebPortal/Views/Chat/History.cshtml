@@ -4,7 +4,7 @@
 
 <h2>Chat History</h2>
 
-<ul id="chat-list" style="list-style: none; overflow-y: auto">
+<ul id="chat-list" style="list-style: none; overflow-y: auto; max-height: 600px">
 </ul>
 
 <script>
@@ -20,7 +20,7 @@
                 var item = "";
                 for (var i = 0; i < data.length; i++) {
                     var message = data[i];
-                    item = item + "<li>" + message.user + " <strong> said: </strong>" + message.message + "</li>";
+                    item = item + "<li>" + message.user + " - " + message.time + " <strong> said: </strong>" + message.message + "</li>";
 
                 }
                 $('#chat-list').html(item);

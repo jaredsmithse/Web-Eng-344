@@ -28,15 +28,34 @@ namespace WebPortal.Controllers
             {
                 var events = db.ChatMessages.ToList<ChatMessage>();
 
-                Object[] eventsArray = new Object[25];
-                int i = events.Count - 1;
-               for (int j = 24; j >= 0; j--, i--)
-               {
-                   ChatMessage e = events.ElementAt(i);
-                   eventsArray[j] = new { user = e.user, message = e.message, time = e.timestamp };
-               }
-                var json = Json(eventsArray, JsonRequestBehavior.AllowGet);
-                return json;
+                if (events.Count > 0)
+                {
+                    if (events.Count <= 25)
+                    {
+                        Object[] eventsArray = new Object[events.Count];
+                        for (int i = 0; i < events.Count; i++)
+                        {
+                            ChatMessage e = events.ElementAt(i);
+                            eventsArray[i] = new { user = e.user, message = e.message, time = e.timestamp };
+                        }
+                        var json = Json(eventsArray, JsonRequestBehavior.AllowGet);
+                        return json;
+                    }
+                    else
+                    {
+                        // More than 25 elements but we only want the last 25
+                        Object[] eventsArray = new Object[25];
+                        for(int i = 25; i >= 1; i--)
+                        {
+                            ChatMessage e = events.ElementAt(events.Count - i);
+                            eventsArray[i-1] = new { user = e.user, message = e.message, time = e.timestamp.ToString() };
+                        }
+
+                        var json = Json(eventsArray.Reverse(), JsonRequestBehavior.AllowGet);
+                        return json;
+                    }
+                }
+                return Json(new Object[0], JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -50,7 +69,7 @@ namespace WebPortal.Controllers
                 for (int i = 0; i < eventsArray.Length; i++)
                 {
                     ChatMessage e = events.ElementAt(i);
-                    eventsArray[i] = new { user = e.user, message = e.message, time = e.timestamp };
+                    eventsArray[i] = new { user = e.user, message = e.message, time = e.timestamp.ToString() };
                 }
                 var json = Json(eventsArray, JsonRequestBehavior.AllowGet);
                 return json;
