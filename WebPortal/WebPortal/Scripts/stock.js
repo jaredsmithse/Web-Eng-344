@@ -40,6 +40,10 @@
                     $timeout(function () {
                         dataTableStocks();
                     }, 0, false);
+                    $scope.totalProfit = 0;
+                    for (var i = 0; i < $scope.myStocks.length; ++i) {
+                        $scope.totalProfit += $scope.myStocks[i].Profit;
+                    }
                 });
                 $scope.transactions = Transaction.query(function () {
                     for (var i = 0; i < $scope.transactions.length; ++i) {
