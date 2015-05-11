@@ -34,6 +34,10 @@ namespace WebPortal
                         "~/Scripts/angular-resource.min.js",
                         "~/Scripts/stock.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/dataTables").Include(
+                        "~/Scripts/jquery.dataTables.min.js",
+                        "~/Scripts/dataTables.bootstrap.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
@@ -43,6 +47,9 @@ namespace WebPortal
 
             bundles.Add(new StyleBundle("~/Content/jquery-datetimepicker-css").Include(
                       "~/Content/jquery.datetimepicker.css"));
+
+            bundles.Add(new StyleBundle("~/Content/dataTables").Include(
+                "~/Content/dataTables.bootstrap.css"));
         }
     }
 }

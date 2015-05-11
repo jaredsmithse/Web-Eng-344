@@ -3,6 +3,7 @@
 }
 
 @section scripts{
+    @Scripts.Render("~/bundles/dataTables")
     @Scripts.Render("~/bundles/angular")
 }
 
@@ -17,33 +18,42 @@
             <td>{{searchResult.Name}}</td>
             <td>{{searchResult.LastPrice | currency}}</td>
             <td>{{searchResult.Change | currency}}</td>
-            <td><input type="number" id="buyAmount" ng-model="searchBuy.amt" /><button ng-click="buy()">Buy {{searchBuy.amt}}</button></td>
+            <td><input style="width: 3em;" type="number" id="buyAmount" ng-model="searchBuy.amt" /><button ng-click="buy()">Buy {{searchBuy.amt}}</button></td>
         </tr>
     </table>
 
     <h3>My Stocks</h3>
-    <table class="table table-condensed">
-        <tr><th>Symbol</th><th>Name</th><th>Amount</th><th>Last Price</th><th>Change</th><th>Profit</th><th>Trade</th></tr>
-        <tr ng-repeat="stock in myStocks">
+    <table id="myStocks" class="table table-condensed">
+        <thead><tr><th>Symbol</th><th>Name</th><th>Amount</th><th>Last Price</th><th>Change</th><th>Profit</th><th>Trade</th></tr></thead>
+        <tbody><tr ng-repeat="stock in myStocks">
             <td>{{stock.Symbol}}</td>
             <td>{{stock.Name}}</td>
             <td>{{stock.AmountOwned}}</td>
             <td>{{stock.LastPrice | currency}}</td>
             <td>{{stock.Change | currency}}</td>
             <td>{{stock.Profit | currency}}</td>
-            <td><input type="number" ng-model="stock.tradeAmt" /><button ng-click="buy(stock)">Buy</button><button ng-click="sell(stock)">Sell</button></td>
-        </tr>
+            <td style="white-space: nowrap;"><input style="width: 3em;" type="number" ng-model="stock.tradeAmt" /><button ng-click="buy(stock)">Buy</button><button ng-click="sell(stock)">Sell</button></td>
+        </tr></tbody>
+        <tfoot><tr>
+            <th><input id="filter-stocks-symbol" type="text" placeholder="Search Symbol" /></th>
+            <th><input id="filter-stocks-name" type="text" placeholder="Search Name" /></th>
+            <th><input id="filter-stocks-amt-min" style="width: 5em;" type="number" placeholder="min" /><br /><input id="filter-stocks-amt-max" style="width: 5em;" type="number" placeholder="max" /></th>
+            <th>$<input id="filter-stocks-price-min" style="width: 5em;" type="text" placeholder="min" /><br />$<input id="filter-stocks-price-max" style="width: 5em;" type="text" placeholder="max" /></th>
+            <th>$<input id="filter-stocks-change-min" style="width: 5em;" type="text" placeholder="min" /><br />$<input id="filter-stocks-change-max" style="width: 5em;" type="text" placeholder="max" /></th>
+            <th>$<input id="filter-stocks-profit-min" style="width: 5em;" type="text" placeholder="min" /><br />$<input id="filter-stocks-profit-max" style="width: 5em;" type="text" placeholder="max" /></th>
+            <th></th>
+        </tr></tfoot>
     </table>
 
     <h3>Transactions</h3>
-    <table class="table table-condensed">
-        <tr><th>Date</th><th>Symbol</th><th>Type</th><th>Amount</th><th>Price (Total)</th></tr>
-        <tr ng-repeat="transaction in transactions">
+    <table id="transactions" class="table table-condensed">
+        <thead><tr><th>Date</th><th>Symbol</th><th>Type</th><th>Amount</th><th>Price (Total)</th></tr></thead>
+        <tbody><tr ng-repeat="transaction in transactions">
             <td>{{transaction.date | date : short}}</td>
             <td>{{transaction.Symbol}}</td>
             <td>{{transaction.type}}</td>
             <td>{{transaction.Amount}}</td>
             <td>{{transaction.price | currency}} ({{transaction.total | currency}})</td>
-        </tr>
+        </tr></tbody>
     </table>
 </div>
