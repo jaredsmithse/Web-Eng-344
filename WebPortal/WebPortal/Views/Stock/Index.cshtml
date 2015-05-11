@@ -79,4 +79,14 @@
             <th>$<input id="filter-transactions-total-min" style="width: 5em;" type="text" placeholder="min" /><br />$<input id="filter-transactions-total-max" style="width: 5em;" type="text" placeholder="max" /></th>
         </tr></tfoot>
     </table>
+
+    <div class="btn-group-vertical pull-left">
+        <a class="btn btn-primary" href="/Stock/Export">Export Transaction History</a>
+        <button class="btn btn-primary" ng-click="purge()">Purge Transaction History</button>
+    </div>
+    @using (Html.BeginForm("Upload", "Stock", FormMethod.Post, new { @class = "pull-right", enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="file" /> <input class="btn btn-primary" type="submit" value="Upload Transaction History" />
+    }
+    <div style="clear:both;"></div>
 </div>

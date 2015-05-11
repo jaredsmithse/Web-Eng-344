@@ -11,6 +11,10 @@
         function ($resource) {
             return $resource('/Stock/Transactions');
         }])
+    .factory('Purge', ['$resource',
+        function ($resource) {
+            return $resource('/Stock/PurgeTransactions');
+        }])
     .controller('StockCtrl', ['$scope', '$q', 'Stock',
         function ($scope, $q, Stock) {
             function refresh() {
@@ -23,8 +27,8 @@
             refresh();
             setInterval(refresh, 10000);
         }])
-    .controller('StockPageCtrl', ['$scope', '$q', '$timeout', '$modal', 'Stock', 'Transaction',
-        function ($scope, $q, $timeout, $modal, Stock, Transaction) {
+    .controller('StockPageCtrl', ['$scope', '$q', '$timeout', '$modal', 'Stock', 'Transaction', 'Purge',
+        function ($scope, $q, $timeout, $modal, Stock, Transaction, Purge) {
             $scope.searchBuy = { amt: 1 };
 
             function refresh() {
@@ -95,6 +99,10 @@
                     }
                 });
             };
+
+            $scope.purge = function () {
+                Purge.delete();
+            }
         }]);
 
 

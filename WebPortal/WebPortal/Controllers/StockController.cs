@@ -134,6 +134,18 @@ namespace WebPortal.Controllers
             return View("Index");
         }
 
+        [HttpDelete]
+        public ActionResult PurgeTransactions()
+        {
+            using (var db = new WebPortalContext())
+            {
+                var myTransactions = db.Transactions.Where(t => t.User == User.Identity.Name).ToList<Transaction>();
+                db.Transactions.RemoveRange(myTransactions);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
         // sell
         // Delete: api/Stock/:symbol/:amt
         [Route("api/Stock/{symbol}/{amt}"), HttpDelete]
@@ -176,6 +188,74 @@ namespace WebPortal.Controllers
                 db.SaveChanges();
             }
             return View("Index");
+        }
+
+        public ActionResult Export()
+        {
+            string csv = "date\tsymbol\tbuy\tamount\tprice\n";
+            using (var db = new WebPortalContext())
+            {
+                var transactions = db.Transactions.Where(t => t.User == User.Identity.Name).ToList<Transaction>();
+                foreach (var t in transactions)
+                {
+                    csv += t.date + "\t" + t.Symbol + "\t" + t.buy + "\t" + t.Amount + "\t" + t.price + "\n";
+                }
+            }
+            string fileName = "TransactionData.csv";
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", fileName);
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            // Verify that the user selected a file
+            if (file != null && file.ContentLength > 0)
+            {
+                var transactions = new List<Transaction>();
+                try
+                {
+                    // Read File
+                    string fileData = new StreamReader(file.InputStream).ReadToEnd();
+                    // Parse
+                    string[] fileDataArray = fileData.Split('\n');
+                    // Start at [1] because [0] is header
+                    for (int i = 1; i < fileDataArray.Length; i++)
+                    {
+                        var transactionData = fileDataArray[i];
+                        if (transactionData != null && transactionData.Length > 0)
+                        {
+                            // Form of line is Date\tSymbol\tBuy\tAmount\tPrice
+                            var transactionDataArray = transactionData.Split('\t');
+                            var t = new Transaction();
+                            t.date = Convert.ToDateTime(transactionDataArray[0]);
+                            t.Symbol = transactionDataArray[1];
+                            t.buy = Convert.ToBoolean(transactionDataArray[2]);
+                            t.Amount = Convert.ToInt32(transactionDataArray[3]);
+                            t.price = Convert.ToDecimal(transactionDataArray[4]);
+                            t.User = User.Identity.Name;
+                            transactions.Add(t);
+                        }
+                    }
+                }
+                catch
+                {
+                    return Content("Error trying to read file. Click Back and try a different File");
+                }
+
+                try
+                {
+                    using (var db = new WebPortalContext())
+                    {
+                        db.Transactions.AddRange(transactions);
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    return Content("Error trying to save to Database. Click Back and try again");
+                }
+            }
+            return RedirectToAction("Index");
         }
 	}
 }
