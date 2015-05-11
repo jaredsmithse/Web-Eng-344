@@ -3,7 +3,7 @@ namespace WebPortal.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class HoldingNote : DbMigration
+    public partial class FixPlease : DbMigration
     {
         public override void Up()
         {

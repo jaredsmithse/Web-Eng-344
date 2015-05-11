@@ -190,9 +190,9 @@
     <Compile Include="Migrations\201505110156389_ChatMessages.Designer.cs">
       <DependentUpon>201505110156389_ChatMessages.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505110154023_Holding Note.cs" />
-    <Compile Include="Migrations\201505110154023_Holding Note.Designer.cs">
-      <DependentUpon>201505110154023_Holding Note.cs</DependentUpon>
+    <Compile Include="Migrations\201505110339513_FixPlease.cs" />
+    <Compile Include="Migrations\201505110339513_FixPlease.Designer.cs">
+      <DependentUpon>201505110339513_FixPlease.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -343,8 +343,8 @@
     <EmbeddedResource Include="Migrations\201505110156389_ChatMessages.resx">
       <DependentUpon>201505110156389_ChatMessages.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505110154023_Holding Note.resx">
-      <DependentUpon>201505110154023_Holding Note.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201505110339513_FixPlease.resx">
+      <DependentUpon>201505110339513_FixPlease.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

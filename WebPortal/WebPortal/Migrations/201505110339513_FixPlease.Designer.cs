@@ -7,13 +7,13 @@ namespace WebPortal.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class HoldingNote : IMigrationMetadata
+    public sealed partial class FixPlease : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(HoldingNote));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FixPlease));
         
         string IMigrationMetadata.Id
         {
-            get { return "201505110154023_Holding Note"; }
+            get { return "201505110339513_FixPlease"; }
         }
         
         string IMigrationMetadata.Source
