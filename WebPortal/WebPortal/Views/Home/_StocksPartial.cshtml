@@ -2,15 +2,15 @@
     <table class="table table-condensed">
         <tr>
             <th>Symbol</th>
-            <th>Name</th>
             <th>Price</th>
             <th>Change</th>
+            <th>Profit</th>
         </tr>
         <tr ng-repeat="stock in stocks">
             <td>{{stock.Symbol}}</td>
-            <td>{{stock.Name}}</td>
             <td>{{stock.LastPrice | currency}}</td>
             <td>{{stock.Change | currency}}</td>
+            <td>{{stock.Profit | currency}}</td>
         </tr>
     </table>
 </div>

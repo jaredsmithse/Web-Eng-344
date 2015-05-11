@@ -23,16 +23,6 @@ namespace WebPortal.Controllers
         }
 
         //
-        // GET: /Stock/Quote
-        public async Task<JsonResult> Quote()
-        {
-            return Json(
-                await new StockApi().GetStocksAsync(),
-                "application/json",
-                JsonRequestBehavior.AllowGet);
-        }
-
-        //
         // Get: /Stock/Transactions
         public JsonResult Transactions()
         {

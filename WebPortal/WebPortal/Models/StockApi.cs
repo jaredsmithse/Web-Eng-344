@@ -47,15 +47,6 @@ namespace WebPortal.Models
             }
         }
 
-        public async Task<IEnumerable<Stock>> GetStocksAsync()
-        {
-            string[] symbols = new[] { "AAPL", "MSFT", "GOOG", "AMZN", "FB" };
-            IEnumerable<Task<Stock>> allTasks = symbols.Select(symbol => GetStockAsync(symbol));
-            Stock[] allResults = await Task.WhenAll(allTasks);
-            IEnumerable<Stock> allStocks = allResults.Select(stock => stock);
-            return allStocks;
-        }
-
         public async Task<Stock> GetStockFromHolding(Holding holding)
         {
             Stock stock = await GetStockAsync(holding.Symbol);
