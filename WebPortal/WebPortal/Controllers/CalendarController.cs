@@ -22,13 +22,10 @@ namespace WebPortal.Controllers
             using (var db = new WebPortalContext())
             {
                 var events = db.CalEvents.Where(e => e.user == User.Identity.Name).ToList<CalEvent>();
-
+		
                 Object[] eventsArray = new Object[events.Count];
-                for (int i = 0; i < events.Count; i++ )
-                {
-                    CalEvent e = events.ElementAt(i);
-                    eventsArray[i] = new { title = e.title, start = e.start, end = e.end };
-                }
+                eventsArray = events.Select( e => new {title = e.title, start = e.start, end = e.end} ).ToArray();
+
                 var json= Json(eventsArray, JsonRequestBehavior.AllowGet);
                 return json;
             }
